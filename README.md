@@ -223,7 +223,7 @@ Use `python geo-locator.py --dry-run` to inspect the generated embed JSON.
 
 ---
 
-## ◈ Developer
+## 💻 Developer
 
 <div align="center">
 
@@ -233,7 +233,7 @@ Use `python geo-locator.py --dry-run` to inspect the generated embed JSON.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Hidden--Rhythm-181717?style=for-the-badge&logo=github)](https://github.com/Hidden-Rhythm)
 
-**Explore more projects:** [github.com/Hidden-Rhythm](https://github.com/Hidden-Rhythm)
+**Explore more projects:** [Projects](https://github.com/Hidden-Rhythm?tab=repositories)
 
 <br>
 
