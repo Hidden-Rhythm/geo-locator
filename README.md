@@ -1,44 +1,112 @@
-# 📍 Geo Locator
+ <div align="center">
 
-<div align="center">
+# 📍 GEO LOCATOR
 
-**A lightweight Python-based geolocation tool with Discord webhook reporting.**
+### `Locate. Analyze. Report.`
 
-Detect your machine's approximate or available device location, collect network information, and send a detailed location report directly to Discord.
+**A Python-based geolocation tool with OS, Wi-Fi, and IP detection — built with Discord webhook reporting.**
 
-[Features](#-features) · [Installation](#-installation) · [Configuration](#-configuration) · [Usage](#-usage) · [Disclaimer](#-disclaimer)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-181717?style=for-the-badge&logo=linux&logoColor=white)](#-platform-support)
+[![Version](https://img.shields.io/badge/Version-1.0.0-8A2BE2?style=for-the-badge)](#)
+[![License](https://img.shields.io/badge/License-Check%20Repository-gray?style=for-the-badge)](#)
+
+<br>
+
+**A lightweight, multi-source location utility designed for the terminal.**
+
+[Features](#-features) · [Installation](#-installation) · [Configuration](#-configuration) · [Usage](#-usage)
 
 </div>
 
 ---
 
-## ✨ Features
+## ◈ Overview
 
-- 📍 **Multi-source location detection** — Attempts operating-system location services, Wi-Fi positioning, and IP geolocation.
-- 🌐 **IP information** — Collects public IP, local IP, ISP, and available geographic information.
-- 🖥️ **System information** — Reports hostname, operating system, and Python version.
-- 🎯 **Accuracy information** — Displays reported location accuracy when available.
-- 🗺️ **Google Maps integration** — Generates a direct map link for the detected coordinates.
-- 💬 **Discord webhook reporting** — Sends the results in a formatted Discord embed.
-- 🔄 **Provider fallback** — Tries alternative location sources when a provider fails.
-- 🛠️ **Configurable timeouts** — Control how long location providers can take.
-- 🧪 **Dry-run mode** — Preview the Discord embed as JSON without sending it.
-- 🔍 **Verbose diagnostics** — Inspect provider attempts and troubleshooting information.
-- 🐍 **Python standard library** — Core functionality uses Python's built-in modules, with optional platform-specific support.
+**Geo Locator** is a Python command-line tool that gathers location and network information using multiple detection methods. It attempts to determine location through operating-system services and Wi-Fi positioning, with IP geolocation as a fallback.
 
-## ⚙️ How It Works
+It can then format the collected information into a Discord embed and send it to a configured webhook.
 
-Geo Locator follows a fallback-based detection process:
+> Designed for a simple workflow: run the script, collect available information, and review the generated report.
 
-1. **OS location services** — Attempts to obtain coordinates from supported operating-system location APIs.
-2. **Wi-Fi positioning** — Uses visible Wi-Fi access points with supported positioning services.
-3. **IP geolocation** — Falls back to external IP geolocation providers when other methods fail.
-4. **Report generation** — Formats the available coordinates and system/network information into a Discord embed.
-5. **Discord delivery** — Sends the report through your configured webhook.
+## ✦ Features
 
-> Location accuracy depends on your operating system, available hardware, network configuration, and external providers. IP-based locations may identify only your approximate area.
+<table>
+<tr>
+<td width="50%">
 
-## 📦 Installation
+### 🌐 Multi-Source Location
+Uses available OS location services, Wi-Fi positioning, and IP-based geolocation.
+
+</td>
+<td width="50%">
+
+### 🛰️ Provider Fallback
+Tries alternative location providers when earlier methods are unavailable.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🖥️ System Information
+Collects available details such as operating system, Python version, hostname, and local IP.
+
+</td>
+<td width="50%">
+
+### 📡 Network Details
+Can report public IP, ISP or organization, and IP-derived region information.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 💬 Discord Integration
+Formats results into an embed and sends them to a configured Discord webhook.
+
+</td>
+<td width="50%">
+
+### 🧪 Dry-Run Mode
+Preview the generated Discord embed as JSON without sending a webhook message.
+
+</td>
+</tr>
+</table>
+
+## ⚡ How It Works
+
+```text
+          ┌─────────────────────┐
+          │     GEO LOCATOR     │
+          └──────────┬──────────┘
+                     │
+          ┌──────────▼──────────┐
+          │  OS Location APIs   │
+          └──────────┬──────────┘
+                     │
+          ┌──────────▼──────────┐
+          │  Wi-Fi Positioning  │
+          └──────────┬──────────┘
+                     │
+          ┌──────────▼──────────┐
+          │  IP Geolocation     │
+          └──────────┬──────────┘
+                     │
+          ┌──────────▼──────────┐
+          │  Build Report       │
+          └──────────┬──────────┘
+                     │
+          ┌──────────▼──────────┐
+          │ Discord Webhook     │
+          └─────────────────────┘
+```
+
+*Actual location accuracy and available methods depend on the operating system, hardware, network, and external services.*
+
+## ⬇ Installation
 
 ### 1. Clone the repository
 
@@ -49,24 +117,19 @@ cd geo-locator
 
 ### 2. Check Python
 
-Python 3.10 or newer is recommended.
-
 ```bash
 python --version
 ```
 
-### 3. Configure Discord
+Python 3.10 or newer is recommended.
 
-Create a webhook in a Discord channel you control:
+### 3. Configure the tool
 
-1. Open the channel's settings.
-2. Find **Integrations → Webhooks**.
-3. Create a webhook and copy its URL.
-4. Open `geo-locator.py` and update the configuration.
+Open `geo-locator.py` and find the configuration section near the top of the file.
 
-## 🔧 Configuration
+## ⚙ Configuration
 
-At the top of `geo-locator.py`, configure these values:
+Set the values you need directly in the script.
 
 ```python
 DISCORD_WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL"
@@ -77,138 +140,103 @@ IP_TIMEOUT = 8.0
 WEBHOOK_TIMEOUT = 10.0
 ```
 
-| Setting | Description |
+| Setting | Purpose |
 |---|---|
 | `DISCORD_WEBHOOK_URL` | Discord webhook used to deliver reports |
-| `DISCORD_USERNAME` | Username displayed by the webhook |
-| `LOCATION_TIMEOUT` | Timeout for each location provider |
-| `IP_TIMEOUT` | Timeout for IP information requests |
-| `WEBHOOK_TIMEOUT` | Timeout for Discord HTTP requests |
+| `DISCORD_USERNAME` | Username displayed for webhook messages |
+| `LOCATION_TIMEOUT` | Maximum wait for location detection |
+| `IP_TIMEOUT` | Maximum wait for IP lookup |
+| `WEBHOOK_TIMEOUT` | Maximum wait for webhook requests |
 
-**Security:** Keep your webhook URL private. Anyone who obtains it may be able to post messages to its associated channel. Do not publish a real webhook URL in your repository.
+**Keep your webhook URL private.** Anyone with access to it may be able to send messages through your webhook.
 
 ## 🚀 Usage
 
-Run Geo Locator from your terminal.
-
-### Standard execution
+Run the script:
 
 ```bash
 python geo-locator.py
 ```
 
-This attempts to resolve the location and send the report to Discord.
+### Available options
 
-### Preview the report without sending it
-
-```bash
-python geo-locator.py --dry-run
-```
-
-Prints the generated embed payload as JSON. This is useful for testing the report format without configuring a webhook.
-
-### Enable diagnostic output
-
-```bash
-python geo-locator.py --verbose
-```
-
-Displays diagnostic messages about provider attempts, network errors, and execution progress.
-
-### Change the location timeout
-
-```bash
-python geo-locator.py --timeout 30
-```
-
-Sets the per-provider location timeout to 30 seconds.
-
-### Display the version
-
-```bash
-python geo-locator.py --version
-```
-
-### View all available options
-
-```bash
-python geo-locator.py --help
-```
-
-## 📊 Discord Report
-
-When a location is resolved, the embed can include:
-
-- Latitude and longitude
-- Reported accuracy, when available
-- Detection method
-- Public and local IP addresses
-- ISP or network organization
-- Hostname and operating system
-- Python version
-- IP-derived city, region, country, and timezone when available
-- Execution time
-- Google Maps link
-
-If no provider can resolve the location, Geo Locator generates a failure report instead.
-
-## 🖥️ Platform Support
-
-| Platform | Location methods |
+| Command | Description |
 |---|---|
-| Windows | Windows Location API, Wi-Fi positioning, IP geolocation |
-| macOS | CoreLocation when the required PyObjC bindings are available, Wi-Fi positioning, IP geolocation |
-| Linux | GPS through `gpsd` when configured, Wi-Fi positioning, IP geolocation |
+| `python geo-locator.py --help` | Display available command-line options |
+| `python geo-locator.py --version` | Display the current version |
+| `python geo-locator.py --dry-run` | Print the Discord embed JSON without sending it |
+| `python geo-locator.py --verbose` | Display additional diagnostic information |
+| `python geo-locator.py --timeout 30` | Set the location timeout to 30 seconds |
 
-Availability depends on installed components, permissions, hardware, and provider access. Some location methods may be unavailable on a particular machine.
-
-## 🧰 Troubleshooting
-
-**No location detected**
-
-- Check your internet connection.
-- Ensure your device's location services are enabled.
-- Check Wi-Fi availability and location permissions.
-- Run with `--verbose` to inspect provider failures.
-
-**Discord report not received**
-
-- Verify `DISCORD_WEBHOOK_URL`.
-- Make sure the webhook still exists and has permission to post.
-- Check the terminal output for HTTP or network errors.
-
-**Location is inaccurate**
-
-- IP geolocation is approximate and may identify your ISP's network location rather than your physical location.
-- Device and Wi-Fi positioning accuracy varies by environment.
-
-**Test without Discord**
+Combine diagnostic mode with a dry run:
 
 ```bash
 python geo-locator.py --dry-run --verbose
 ```
 
-## 🔒 Disclaimer
+**Note:** Normal execution requires a configured Discord webhook URL.
 
-Geo Locator is intended for legitimate device diagnostics, geolocation experiments, and systems you own or are authorized to inspect.
+## 🖥️ Platform Support
 
-Running the tool may transmit network information and Wi-Fi access point identifiers to external location providers. When Discord reporting is enabled, the generated report may disclose IP addresses, coordinates, hostname, and system details to the configured Discord channel.
+| Platform | Available location methods |
+|---|---|
+| Windows | Windows location API, Wi-Fi positioning, IP lookup |
+| macOS | CoreLocation when the required PyObjC support is available, Wi-Fi positioning, IP lookup |
+| Linux | GPS through `gpsd` when configured, Wi-Fi positioning, IP lookup |
 
-Use it responsibly, protect your webhook URL, and obtain appropriate permission before collecting or sharing device information.
+Some platform-specific methods require additional system setup or optional dependencies. A fallback method may be used when a preferred method is unavailable.
 
-## 👨‍💻 Author
+## 🔐 Privacy & Responsible Use
 
-**Hidden-Rhythm**
+Geo Locator can collect sensitive information, including public IP addresses, local network details, hostnames, and potentially geographic coordinates.
 
-- GitHub: [@Hidden-Rhythm](https://github.com/Hidden-Rhythm)
-- Repository: [geo-locator](https://github.com/Hidden-Rhythm/geo-locator)
+- Use it only on systems and networks you own or have permission to inspect.
+- Configure only a Discord webhook you control or are authorized to use.
+- Remember that external geolocation services may receive network information or Wi-Fi access-point identifiers.
+- Review generated reports before sharing them.
+- Do not publish webhook URLs or collected location data in public repositories.
+
+Location results may be approximate or unavailable. IP-based geolocation does not reliably identify an exact physical address.
+
+## 🛠 Troubleshooting
+
+<details>
+<summary><strong>Location could not be detected</strong></summary>
+
+Check whether location services are enabled, the required platform dependencies are available, and the network connection is working. The tool may fall back to IP-based geolocation.
+
+</details>
+
+<details>
+<summary><strong>Discord report was not delivered</strong></summary>
+
+Verify the webhook URL in `geo-locator.py`, check your internet connection, and run with `--verbose` to inspect diagnostic output.
+
+</details>
+
+<details>
+<summary><strong>Want to test without sending a message?</strong></summary>
+
+Use `python geo-locator.py --dry-run` to inspect the generated embed JSON.
+
+</details>
 
 ---
 
+## ◈ Developer
+
 <div align="center">
 
-**Built with Python 🐍**
+### Hidden-Rhythm
 
-*Locate. Analyze. Report.*
+*Building useful tools, one project at a time.*
+
+[![GitHub](https://img.shields.io/badge/GitHub-Hidden--Rhythm-181717?style=for-the-badge&logo=github)](https://github.com/Hidden-Rhythm)
+
+**Explore more projects:** [github.com/Hidden-Rhythm](https://github.com/Hidden-Rhythm)
+
+<br>
+
+*Made with Python 🐍*
 
 </div>
